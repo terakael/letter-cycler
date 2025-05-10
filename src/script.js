@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (currentElements.length === 0) {
-            displayCurrentElement(); // Will show "Select types"
+            displayCurrentElement(); // Will show "-"
             return;
         }
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentIndex >= 0 && currentIndex < currentElements.length) {
             elementDisplay.textContent = currentElements[currentIndex];
         } else {
-            elementDisplay.textContent = "End"; // Should not happen if logic is correct
+            elementDisplay.textContent = "-"; // Should not happen if logic is correct
         }
     }
 
@@ -87,8 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleShuffleToggle() {
         isShuffled = !isShuffled;
-        // shuffleToggleButton.textContent = `Shuffle: ${isShuffled ? 'On' : 'Off'}`;
-        updateElementList(); // Re-shuffle or re-order
+        updateElementList();
     }
 
     function handleReset() {

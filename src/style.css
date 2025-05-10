@@ -1,16 +1,10 @@
 :root {
     --bg-color: #000000;
-    /* Black */
     --text-color: #ffffff;
-    /* White */
     --accent-color: #4d4d4d;
-    /* React Blue - Lightened */
     --accent-hover-color: #272727;
-    /* React Blue - Darker, for hover */
     --element-bg: #121212;
-    /* Dark Gray for elements */
     --button-active-bg: #294232;
-    /* Green for active */
     --button-active-text: #ffffff;
 }
 
@@ -41,13 +35,11 @@ body {
     justify-content: center;
     width: 100%;
     max-width: 400px;
-    /* Max width for larger screens */
     padding: 20px;
 }
 
 .element-display {
     font-size: 30vw;
-    /* Responsive font size based on viewport width */
     font-weight: bold;
     padding: 40px 20px;
     margin-bottom: 30px;
@@ -62,8 +54,6 @@ body {
     text-align: center;
     cursor: pointer;
     user-select: none;
-    /* Prevent text selection on tap */
-    /* Subtle shadow on dark background */
     transition: transform 0.1s ease-out;
 }
 
@@ -81,8 +71,6 @@ body {
     display: flex;
     gap: 10px;
     justify-content: center;
-    /* flex-wrap: wrap; */
-    /* Allow buttons to wrap on smaller screens if needed */
 }
 
 .toggle-btn,
@@ -97,8 +85,6 @@ body {
     /* Relative to body font size */
     transition: background-color 0.2s ease, transform 0.1s ease;
     flex-grow: 1;
-    /* Allow buttons to grow and fill space */
-    /* Minimum width for buttons */
 }
 
 .toggle-btn:hover,
