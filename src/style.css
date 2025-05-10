@@ -1,0 +1,131 @@
+:root {
+    --bg-color: #000000;
+    /* Black */
+    --text-color: #ffffff;
+    /* White */
+    --accent-color: #4d4d4d;
+    /* React Blue - Lightened */
+    --accent-hover-color: #272727;
+    /* React Blue - Darker, for hover */
+    --element-bg: #121212;
+    /* Dark Gray for elements */
+    --button-active-bg: #294232;
+    /* Green for active */
+    --button-active-text: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight on mobile */
+    touch-action: manipulation;
+    /* Improve touch responsiveness */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    /* Max width for larger screens */
+    padding: 20px;
+}
+
+.element-display {
+    font-size: 30vw;
+    /* Responsive font size based on viewport width */
+    font-weight: bold;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    background-color: var(--element-bg);
+    border-radius: 15px;
+    min-height: 150px;
+    /* Ensure it has some height even if empty */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    /* Prevent text selection on tap */
+    /* Subtle shadow on dark background */
+    transition: transform 0.1s ease-out;
+}
+
+.element-display:active {
+    transform: scale(0.95);
+}
+
+.controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.type-toggles {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    /* Allow buttons to wrap on smaller screens if needed */
+}
+
+.toggle-btn,
+.action-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    /* Relative to body font size */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    flex-grow: 1;
+    /* Allow buttons to grow and fill space */
+    /* Minimum width for buttons */
+}
+
+.toggle-btn:hover,
+.action-btn:hover {
+    background-color: var(--accent-hover-color);
+}
+
+.toggle-btn:active,
+.action-btn:active {
+    transform: translateY(1px);
+}
+
+.toggle-btn.active {
+    background-color: var(--button-active-bg);
+    color: var(--button-active-text);
+    font-weight: bold;
+}
+
+/* Larger font for element on larger screens, but still relative */
+@media (min-width: 600px) {
+    .element-display {
+        font-size: 6rem;
+        /* Example: 96px if root font is 16px */
+    }
+
+    .toggle-btn,
+    .action-btn {
+        font-size: 1.1em;
+    }
+}

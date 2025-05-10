@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: letter-cycler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: letter-cycler
+  template:
+    metadata:
+      labels:
+        app: letter-cycler
+    spec:
+      containers:
+        - name: letter-cycler
+          image: docker.io/terakael/wrqlz:20250510_02
+          ports:
+            - containerPort: 80
