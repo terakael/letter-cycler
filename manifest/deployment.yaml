@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: letter-cycler
-          image: docker.io/terakael/wrqlz:20250510_02
+          image: docker.io/terakael/wrqlz:20250523_01
           ports:
             - containerPort: 80

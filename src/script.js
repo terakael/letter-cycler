@@ -6,8 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allData = {
         letters: Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a-z
+        capitals: Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
         combos: ['sh', 'ch', 'th', 'ph'],
-        cvc: ['cat', 'dog', 'sun', 'hat', 'big', 'run', 'mop', 'pig', 'hen', 'cup', 'bed', 'fin', 'log', 'map', 'pen', 'sit', 'top', 'van', 'wig', 'zip']
+        cvc: [
+            'bag', 'bat', 'bed', 'big', 'bud', 'bug',
+            'can', 'cap', 'cat', 'cob', 'cup',
+            'dad', 'dip', 'dog',
+            'fan', 'fin', 'fog', 'fun',
+            'hat', 'hen', 'hop', 'hot',
+            'log',
+            'man', 'map', 'mom', 'mop', 'mug',
+            'nut',
+            'pen', 'pig', 'pod',
+            'red', 'run',
+            'sip', 'sit', 'sun',
+            'tan', 'top',
+            'van',
+            'wet', 'wig',
+            'zip'
+        ],
+        numbers11to19: Array.from({ length: 9 }, (_, i) => (11 + i).toString()),
+        numbers10to90: Array.from({ length: 9 }, (_, i) => ((i + 1) * 10).toString())
     };
 
     let currentElements = [];
