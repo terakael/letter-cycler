@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Handlers ---
+    function handlePreviousElement() {
+        if (currentElements.length === 0) return;
+
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = currentElements.length - 1; // Loop to the end
+        }
+        displayCurrentElement();
+    }
+
     function handleNextElement() {
         if (currentElements.length === 0) return;
 
@@ -115,7 +125,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Initialize ---
-    elementDisplay.addEventListener('click', handleNextElement);
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const SWIPE_THRESHOLD = 50; // Minimum distance in pixels to consider it a swipe
+
+    elementDisplay.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        elementDisplay.classList.add('swiping');
+    });
+
+    elementDisplay.addEventListener('touchmove', (e) => {
+        const currentX = e.changedTouches[0].screenX;
+        const diff = currentX - touchStartX;
+        // Add visual feedback during swipe
+        elementDisplay.style.transform = `translateX(${diff * 0.3}px)`;
+    });
+
+    elementDisplay.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        elementDisplay.classList.remove('swiping');
+        elementDisplay.style.transform = '';
+
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > SWIPE_THRESHOLD) {
+            if (diff > 0) {
+                handlePreviousElement(); // Swipe right
+            } else {
+                handleNextElement(); // Swipe left
+            }
+        }
+    });
+
     // Also allow Enter key if element is focused (for accessibility/desktop)
     elementDisplay.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
