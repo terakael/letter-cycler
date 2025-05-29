@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Learning Flashcards</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
         <div id="element-display" class="element-display" tabindex="0">
-            <!-- Element will be shown here -->
+            <span id="element-content"></span>
+            <i class="star-icon fas fa-star"></i>
         </div>
 
         <div class="controls">
@@ -22,6 +24,7 @@
                 <button data-type="cvc" class="toggle-btn">cat</button>
                 <button data-type="numbers11to19" class="toggle-btn">11</button>
                 <button data-type="numbers10to90" class="toggle-btn">20</button>
+                <button id="starred-toggle" class="toggle-btn">⭐</button>
                 <button id="shuffle-toggle" class="toggle-btn">🎲</button>
                 <button id="reset-button" class="action-btn">🔄</button>
             </div>

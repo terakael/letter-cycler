@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeToggleButtons = document.querySelectorAll('.type-toggles .toggle-btn');
     const shuffleToggleButton = document.getElementById('shuffle-toggle');
     const resetButton = document.getElementById('reset-button');
-
+    const starIcon = document.querySelector('.star-icon');
+    const starredToggleButton = document.getElementById('starred-toggle');
     const allData = {
         letters: Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a-z
         capitals: Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
@@ -28,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         numbers11to19: Array.from({ length: 9 }, (_, i) => (11 + i).toString()),
         numbers10to90: Array.from({ length: 9 }, (_, i) => ((i + 1) * 10).toString())
     };
-
     let currentElements = [];
     let currentIndex = 0;
     let activeTypes = ['letters']; // Default to letters
     let isShuffled = false;
+    let starredElements = JSON.parse(localStorage.getItem('starredElements')) || [];
+    let showStarredOnly = false;
+
 
     // --- Helper Functions ---
     function shuffleArray(array) {
@@ -50,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        if (showStarredOnly) {
+            currentElements = starredElements.filter(element => {
+                // Check if element exists in any of the data types
+                return Object.values(allData).some(arr => arr.includes(element));
+            });
+        }
+
         if (currentElements.length === 0) {
             displayCurrentElement(); // Will show "-"
             return;
@@ -65,16 +75,50 @@ document.addEventListener('DOMContentLoaded', () => {
         displayCurrentElement();
     }
 
+    function handleStarredToggle(event) {
+        const button = event.target;
+        // button.classList.toggle('active');
+        showStarredOnly = button.classList.contains('active');
+        updateElementList();
+    }
+
     function displayCurrentElement() {
         if (currentElements.length === 0) {
-            elementDisplay.textContent = "-";
+            document.getElementById('element-content').textContent = "-";
+            starIcon.classList.remove('active');
+            starIcon.style.opacity = '0.5';
             return;
         }
         if (currentIndex >= 0 && currentIndex < currentElements.length) {
-            elementDisplay.textContent = currentElements[currentIndex];
+            const currentElement = currentElements[currentIndex];
+            document.getElementById('element-content').textContent = currentElement;
+
+            // Update star icon state
+            starIcon.style.opacity = '1';
+            if (starredElements.includes(currentElement)) {
+                starIcon.classList.add('active');
+            } else {
+                starIcon.classList.remove('active');
+            }
         } else {
             elementDisplay.textContent = "-"; // Should not happen if logic is correct
         }
+    }
+
+    function toggleStarredElement() {
+        if (currentElements.length === 0) return;
+
+        const currentElement = currentElements[currentIndex];
+        const index = starredElements.indexOf(currentElement);
+
+        if (index === -1) {
+            starredElements.push(currentElement);
+        } else {
+            starredElements.splice(index, 1);
+        }
+
+        localStorage.setItem('starredElements', JSON.stringify(starredElements));
+        displayCurrentElement();
     }
 
     // --- Event Handlers ---
@@ -175,6 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     shuffleToggleButton.addEventListener('click', handleShuffleToggle);
     resetButton.addEventListener('click', handleReset);
+    starIcon.addEventListener('click', toggleStarredElement);
+    starredToggleButton.addEventListener('click', handleStarredToggle);
 
     // Initial population
     updateElementList();
