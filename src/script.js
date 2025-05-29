@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (showStarredOnly) {
             currentElements = starredElements.filter(element => {
-                // Check if element exists in any of the data types
-                return Object.values(allData).some(arr => arr.includes(element));
+                return activeTypes.some(type => allData[type]?.includes(element));
             });
         }
 
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleStarredToggle(event) {
         const button = event.target;
-        // button.classList.toggle('active');
         showStarredOnly = button.classList.contains('active');
         updateElementList();
     }
