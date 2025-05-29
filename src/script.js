@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('reset-button');
     const starIcon = document.querySelector('.star-icon');
     const starredToggleButton = document.getElementById('starred-toggle');
+    const playIcon = document.querySelector('.play-icon');
+    let currentAudio = null;
     const allData = {
         letters: Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a-z
         capitals: Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A-Z
@@ -222,4 +224,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial population
     updateElementList();
+
+    // Audio playback functionality
+    playIcon.addEventListener('click', () => {
+        if (currentElements.length === 0) return;
+
+        const currentElement = currentElements[currentIndex];
+
+        // Stop any currently playing audio
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio = null;
+        }
+
+        try {
+            const audioPath = `./assets/sounds/sound_${currentElement.toLowerCase()}.mp3`;
+            currentAudio = new Audio(audioPath);
+            currentAudio.addEventListener('error', () => {
+                console.error('Audio load failed:', {
+                    element: currentElement,
+                    path: audioPath
+                });
+                alert(`Sound file for ${currentElement} not found.`);
+                currentAudio = null;
+            });
+
+            currentAudio.play().catch(error => {
+                console.error('Audio playback failed:', {
+                    error: error.message,
+                    element: currentElement,
+                    path: audioPath
+                });
+                alert(`Could not play sound for ${currentElement}. Please try again.`);
+                currentAudio = null;
+            });
+
+            // Visual feedback
+            playIcon.classList.add('active');
+            setTimeout(() => playIcon.classList.remove('active'), 300);
+        } catch (error) {
+            console.error('Error loading audio:', {
+                error: error.message,
+                element: currentElement
+            });
+            alert(`Error loading sound for ${currentElement}. Please try again.`);
+            currentAudio = null;
+        }
+    });
 });
