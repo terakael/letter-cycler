@@ -44,14 +44,12 @@ body {
 }
 
 .element-display {
-    font-size: 30vw;
     font-weight: bold;
     padding: 40px 20px;
     margin-bottom: 30px;
     background-color: var(--element-bg);
     border-radius: 15px;
-    min-height: 150px;
-    /* Ensure it has some height even if empty */
+    height: 250px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -60,6 +58,10 @@ body {
     cursor: pointer;
     user-select: none;
     transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#element-content {
+    font-size: 30vw;
 }
 
 

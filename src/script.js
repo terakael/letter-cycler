@@ -43,6 +43,27 @@ document.addEventListener('DOMContentLoaded', () => {
             'tack', 'tent', 'trap', 'trip',
             'yell',
         ],
+        sentences: [
+            'The cat sat on the mat.',
+            'The dog is big.',
+            'The sun is hot.',
+            'A bug is on a log.',
+            'The pig is in the pen.',
+            'The cat is on the bed.',
+            'The man has a red cap.',
+            'I can run to the van.',
+            'A wet hen is in the pen.',
+            'I can jump on the bed.',
+            'The duck is in the pond.',
+            'I have a red sock.',
+            'The man has a big hand.',
+            'I can sit on the rock.',
+            'The cat has a wig.',
+            'A man can grab a log.',
+            'I can spin on the spot.',
+            'The duck has a nest.',
+            'I can pick a red top.'
+        ],
         numbers11to19: Array.from({ length: 9 }, (_, i) => (11 + i).toString()),
         numbers10to90: Array.from({ length: 9 }, (_, i) => ((i + 1) * 10).toString())
     };
@@ -97,16 +118,49 @@ document.addEventListener('DOMContentLoaded', () => {
         updateElementList();
     }
 
+    function adjustFontSize(element, container) {
+        // Reset font size to the default from CSS to get a starting point
+        element.style.fontSize = '';
+        
+        // Use the computed style as the base for scaling
+        const baseFontSize = parseFloat(window.getComputedStyle(element, null).getPropertyValue('font-size'));
+
+        // Set a max font size based on container height to avoid vertical overflow
+        const containerHeight = container.clientHeight;
+        const maxFontSize = (containerHeight - 80) * 0.5; // Subtract padding (40px*2) and use 90% of available height
+
+        let finalFontSize = Math.min(baseFontSize, maxFontSize);
+        element.style.fontSize = finalFontSize + 'px';
+
+        // Now, check for width overflow and shrink if necessary
+        const containerWidth = container.clientWidth - 40; // padding is 20px on each side
+        
+        while (element.scrollWidth > containerWidth && finalFontSize > 10) {
+            finalFontSize -= 1;
+            element.style.fontSize = finalFontSize + 'px';
+        }
+
+        // Further reduce font size for sentences
+        if (element.textContent.length > 15) { // Assuming sentences are longer than 15 chars
+            finalFontSize *= 0.75; // Reduce by 25%
+            element.style.fontSize = finalFontSize + 'px';
+        }
+    }
+
     function displayCurrentElement() {
+        const elementContent = document.getElementById('element-content');
         if (currentElements.length === 0) {
-            document.getElementById('element-content').textContent = "-";
+            elementContent.textContent = "-";
             starIcon.classList.remove('active');
             starIcon.style.opacity = '0.5';
+            elementContent.style.fontSize = ''; // Reset font size
             return;
         }
         if (currentIndex >= 0 && currentIndex < currentElements.length) {
             const currentElement = currentElements[currentIndex];
-            document.getElementById('element-content').textContent = currentElement;
+            elementContent.textContent = currentElement;
+
+            adjustFontSize(elementContent, elementDisplay);
 
             // Update star icon state
             starIcon.style.opacity = '1';
@@ -116,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 starIcon.classList.remove('active');
             }
         } else {
-            elementDisplay.textContent = "-"; // Should not happen if logic is correct
+            elementContent.textContent = "-"; // Should not happen if logic is correct
         }
     }
 
