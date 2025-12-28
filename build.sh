@@ -34,7 +34,7 @@ fi
 
 # 2. Log in to Docker Hub
 echo "Logging in to Docker Hub..."
-echo "$DOCKER_PAT" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+echo "$(secret-tool lookup env DOCKER_PAT)" | docker login -u terakael --password-stdin
 if [ $? -ne 0 ]; then
     echo "Error: Docker login to Docker Hub failed."
     exit 1
